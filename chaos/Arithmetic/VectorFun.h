@@ -10,41 +10,81 @@
 
 namespace chaos {
 
-template<typename T1, typename T2, size_t Size>
-inline
+#define VECTOR_BINARY_FUN(bin)  \
+  \
+template<typename T1, typename T2, size_t Size>  \
+inline  \
 VectorExpr<  \
   BinaryExpr<  \
     VectorConstReference<T1, Size>,  \
     VectorConstReference<T2, Size>,  \
-    AddFun<T1, T2>  \
+    bin##Fun<T1, T2>  \
   >,  \
   Size  \
->
-add(const Vector<T1, Size>& lhs, const Vector<T2, Size>& rhs) {
-
-    //test
-    //std::cout << "operator add lhs(0):" << lhs(0) << " " << "rhs(0):" <<rhs(0) << std::endl;
-
+>  \
+bin(const Vector<T1, Size>& lhs, const Vector<T2, Size>& rhs) {  \
+  \
     typedef BinaryExpr<  \
               VectorConstReference<T1, Size>,  \
               VectorConstReference<T2, Size>,  \
-              AddFun<T1, T2>  \
+              bin##Fun<T1, T2>  \
             >  \
-            expr;
-    
-    //expr testE(lhs, rhs);
-    //std::cout << "operator add test Expr 0:" << testE(4) << std::endl;
-    
-    VectorExpr<expr, Size> vecE(expr(lhs.constRef(), rhs.constRef()));
-    std::cout << "operator add test VectorExpr 0:" << vecE(0) << std::endl;
-
-    VectorExpr<expr, Size> t(vecE);
-    std::cout << "Reference vecE:" << t(0) << std::endl;
-    
-
-    return VectorExpr<expr, Size>(expr(lhs.constRef(), rhs.constRef()));
-    //return vecE;
+            expr;  \
+  \
+    return VectorExpr<expr, Size>(expr(lhs.constRef(), rhs.constRef()));  \
+}  \
+  \
+template<typename E, typename T, size_t Size>  \
+inline  \
+VectorExpr<  \
+  BinaryExpr<  \
+    VectorExpr<E, Size>,  \
+    VectorConstReference<T, Size>,  \
+    bin##Fun<typename E::valueType, T>  \
+  >,  \
+  Size  \
+>  \
+bin(const VectorExpr<E, Size>& lhs, const Vector<T, Size>& rhs) {  \
+  \
+    typedef BinaryExpr<  \
+              VectorExpr<E, Size>,  \
+              VectorConstReference<T, Size>,  \
+              bin##Fun<typename E::valueType, T>  \
+            >  \
+            expr;  \
+  \
+    return VectorExpr<expr, Size>(expr(lhs, rhs.constRef()));  \
+}  \
+  \
+template<typename T, typename E, size_t Size>  \
+inline  \
+VectorExpr<  \
+  BinaryExpr<  \
+    VectorConstReference<T, Size>,  \
+    VectorExpr<E, Size>,  \
+    bin##Fun<T, typename E::valueType>  \
+  >,  \
+  Size  \
+>  \
+bin(const Vector<T, Size>& lhs, const VectorExpr<E, Size>& rhs) {  \
+  \
+    typedef BinaryExpr<  \
+              VectorConstReference<T, Size>,  \
+              VectorExpr<E, Size>,  \
+              bin##Fun<T, typename E::valueType>  \
+            >  \
+            expr;  \
+  \
+    return VectorExpr<expr, Size>(expr(lhs.constRef(), rhs));  \
 }
+
+VECTOR_BINARY_FUN(Add)
+VECTOR_BINARY_FUN(Sub)
+VECTOR_BINARY_FUN(Mul)
+VECTOR_BINARY_FUN(Div)
+
+#undef VECTOR_BINARY_FUN
+
 
 }  //namespace
 

@@ -1,4 +1,4 @@
 # Aritimetic TEST
 -----------------------------
 ### tested
-* Vector operator+;
+* Vector operator+,-,*,/;

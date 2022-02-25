@@ -26,8 +26,8 @@ public:
     : expr1(v1), expr2(v2) { 
       
       //test
-      std::cout << "binaryExpr construct:" << "v1(0):" << v1(0) << " " << "v2(0):" << v2(0) << std::endl;
-      std::cout << "BinOp:" << Op::calculate(v1(4), v2(4)) << std::endl;
+      //std::cout << "binaryExpr construct" << std::endl;
+      //std::cout << "BinOp:" << Op::calculate(v1(4), v2(4)) << std::endl;
   }
 
   valueType operator()(size_t i) const{

@@ -144,7 +144,7 @@ private:
   static inline void doAssign(Dest& d, const Src& s, const Assign& assignFun) {
       for(size_t i = 0; i < size; ++i) {
           //test
-          std::cout << "vector do assign:" << s(i) << std::endl;
+          //std::cout << "vector do assign:" << s(i) << std::endl;
           assignFun.applyOn(d(i), s(i));
       }
   }

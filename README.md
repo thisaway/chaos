@@ -2,7 +2,10 @@
 Chaos is a library something what I want to do.
 
 ------------------------------
-## Build
+## Build for tests
+mkdir build && cd build
+cmake ..
+make
 
 ------------------------------
 ## Arithmetic
@@ -12,4 +15,4 @@ Arithmetic operators for Vector;
 * Template expression;
 * Delay calculation;
 * Types of support: **Vector**;
-* Basic functions: add;
+* Basic functions: +,-,*,/(elementwise);

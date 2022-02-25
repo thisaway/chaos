@@ -25,13 +25,13 @@ public:
   VectorExpr(const VectorExpr& ve)
     : expr(ve.expr) {
       std::cout << "VectorExpr copy construct" << std::endl;
-      std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
+      //std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
   }
 
   explicit VectorExpr(const Expr& e)
     : expr(e) { 
       std::cout << "VectorExpr construct from expr" << std::endl;
-      std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
+      //std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
   }
   
   //for Vector;
@@ -43,7 +43,7 @@ public:
   template<typename Dest, typename Assign>
   void assignTo(Dest& d, const Assign& assignFun) const {
       //test
-      std::cout << "Vector assignTo:" << this->operator()(0) << std::endl;
+      //std::cout << "Vector assignTo:" << this->operator()(0) << std::endl;
       doAssign(d, *this, assignFun);
   }
 
