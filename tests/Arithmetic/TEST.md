@@ -2,3 +2,4 @@
 -----------------------------
 ### tested
 * Vector operator+,-,*,/;
+* Matrix operator+,-,*,/;

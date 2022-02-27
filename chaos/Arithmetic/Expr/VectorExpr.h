@@ -23,36 +23,31 @@ public:
 
 public:
   VectorExpr(const VectorExpr& ve)
-    : expr(ve.expr) {
-      std::cout << "VectorExpr copy construct" << std::endl;
-      //std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
-  }
+    : expr(ve.expr) { }
 
   explicit VectorExpr(const Expr& e)
-    : expr(e) { 
-      std::cout << "VectorExpr construct from expr" << std::endl;
-      //std::cout << "VectorExpr index 0:" << this->operator()(0) << std::endl;
-  }
+    : expr(e) { }
   
   //for Vector;
   valueType operator()(size_t i) const {
+
     ASSERT_CHAOS(i < size);
     return expr(i);
   }
 
   template<typename Dest, typename Assign>
   void assignTo(Dest& d, const Assign& assignFun) const {
-      //test
-      //std::cout << "Vector assignTo:" << this->operator()(0) << std::endl;
+      
+      ASSERT_CHAOS(d.size == this->size);
       doAssign(d, *this, assignFun);
   }
 
 private:
   template<typename Dest, typename Src, typename Assign>
   static inline void doAssign(Dest& d, const Src& s, const Assign& assignFun) {
+
       for(size_t i = 0; i < size; ++i) {
-          //test
-          //std::cout << "vector do assign:" << s(i) << std::endl;
+
           assignFun.applyOn(d(i), s(i));
       }
   }

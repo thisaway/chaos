@@ -5,8 +5,6 @@
 #include "Arithmetic.h"
 #include "ArithmeticBase.h"
 
-#include <iostream>
-
 namespace chaos {
 
 template<typename Expr1, typename Expr2, typename Op>
@@ -23,19 +21,18 @@ public:
     : expr1(binExpr.expr1), expr2(binExpr.expr2) { }
 
   explicit BinaryExpr(const Expr1& v1, const Expr2& v2)
-    : expr1(v1), expr2(v2) { 
-      
-      //test
-      //std::cout << "binaryExpr construct" << std::endl;
-      //std::cout << "BinOp:" << Op::calculate(v1(4), v2(4)) << std::endl;
-  }
+    : expr1(v1), expr2(v2) { }
 
+  //For Vector;
   valueType operator()(size_t i) const{
 
-    //std::cout << "BinOp:" << Op::calculate(expr1(i), expr2(i)) << std::endl;
-    //std::cout << "expr1:" << expr1(i) << std::endl;
-    //std::cout << "expr2:" << expr2(i) << std::endl;
-    return Op::calculate(expr1(i), expr2(i));
+      return Op::calculate(expr1(i), expr2(i));
+  }
+
+  //For Matrix;
+  valueType operator()(size_t r, size_t c) const {
+
+      return Op::calculate(expr1(r, c), expr2(r, c));
   }
   
 private:

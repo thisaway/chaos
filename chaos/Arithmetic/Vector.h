@@ -63,12 +63,10 @@ public:
 
 public:
   ~Vector() { }
-  Vector() {
-      std::cout << "Vector construct no param" << std::endl;
-  }
+  Vector() { }
   
   Vector(const Vector& v) {
-      std::cout << "Vector copy construct" << std::endl;
+
       *this = VectorExpr<ConstReference, size>(v.constRef());
   }
 
@@ -89,11 +87,6 @@ public:
   template<typename E>
   Vector& operator=(const VectorExpr<E, size>& ve) {
 
-      std::cout << "Vector operator=" << std::endl;
-      
-      //test
-      //std::cout << ve.operator()(0) << std::endl;
-      //std::cout << "Test VectorExpr 0:" << ve(0) << std::endl;
       ve.assignTo(*this, AssignFun<valueType, typename E::valueType>());
 
       return *this;
@@ -143,8 +136,7 @@ private:
   template<typename Dest, typename Src, typename Assign>
   static inline void doAssign(Dest& d, const Src& s, const Assign& assignFun) {
       for(size_t i = 0; i < size; ++i) {
-          //test
-          //std::cout << "vector do assign:" << s(i) << std::endl;
+
           assignFun.applyOn(d(i), s(i));
       }
   }
