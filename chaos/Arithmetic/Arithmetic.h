@@ -8,6 +8,8 @@ namespace chaos {
 
 #define ASSERT_CHAOS assert
 
+#define TRIGGER_HEAP_MEMORY_ALLOC    16
+
 }  //namespace
 
 #endif

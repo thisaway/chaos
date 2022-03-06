@@ -10,10 +10,12 @@ make test
 
 ------------------------------
 ## Arithmetic
-Arithmetic operators for Vector;
+Arithmetic operators for Vector && Matrix;  
+
 ### Features
 * Traits mechanism；
 * Template expression;
 * Delay calculation;
 * Types of support: **Vector**,**Matrix**;
 * Basic functions: +,-,*,/(elementwise);
+* Trigger for dynamtic memory;

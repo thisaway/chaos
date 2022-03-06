@@ -53,34 +53,55 @@ public:
   enum {
     rows = Rows,
     cols = Cols,
-    size = Rows * Cols
+    size = Rows * Cols,
+    use_heap_memory = size <= TRIGGER_HEAP_MEMORY_ALLOC
   };
 
 public:
   ~Matrix() { }
 
-  Matrix() { }
+  Matrix()
+  #if(use_heap_memory)
+  : inData(new valueType[size])
+  #endif
+  { }
 
-  Matrix(const Matrix& m) {
+  Matrix(const Matrix& m) 
+  #if(use_heap_memory)
+  : inData(new valueType[size])
+  #endif
+  {
 
       *this = MatrixExpr<ConstReference, rows, cols>(m.constRef());
   }
   
   template<typename E>
-  explicit Matrix(const MatrixExpr<E, Rows, Cols>& mexpr) {
+  explicit Matrix(const MatrixExpr<E, Rows, Cols>& mexpr)
+  #if(use_heap_memory)
+  : inData(new valueType[size])
+  #endif
+  {
 
       *this = mexpr;
   }
 
   template<typename TT>
-  Matrix& operator=(const Matrix<TT, Rows, Cols>& m) {
+  Matrix& operator=(const Matrix<TT, Rows, Cols>& m) 
+  #if(use_heap_memory)
+  : inData(new valueType[size])
+  #endif
+  {
 
       m.assignTo(*this, AssignFun<valueType, TT>());
       return *this;
   }
 
   template<typename E>
-  Matrix& operator=(const MatrixExpr<E, Rows, Cols>& mexpr) {
+  Matrix& operator=(const MatrixExpr<E, Rows, Cols>& mexpr) 
+  #if(use_heap_memory)
+  : inData(new valueType[size])
+  #endif
+  {
 
       mexpr.assignTo(*this, AssignFun<valueType, typename E::valueType>());
       return *this;
@@ -146,7 +167,11 @@ private:
   }
 
 private:
+#if(use_heap_memory)
+  valueType* inData;
+#else
   valueType inData[size];
+#endif
   size_t initIndex;
 };
 

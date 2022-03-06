@@ -58,34 +58,55 @@ public:
 
 //private:
   enum {
-      size = Length
+      size = Length,
+      use_heap_memory = size <= TRIGGER_HEAP_MEMORY_ALLOC 
   };
 
 public:
-  ~Vector() { }
+  ~Vector() { 
+      #if(use_heap_memory)
+          delete [] inData;
+      #endif
+  }
   Vector() { }
   
-  Vector(const Vector& v) {
+  Vector(const Vector& v) 
+  #if(use_heap_memory)
+  :inData(new valueType[size]
+  #endif
+  {
 
       *this = VectorExpr<ConstReference, size>(v.constRef());
   }
 
   template<typename E>
-  explicit Vector(const VectorExpr<E, size>& e) {
+  explicit Vector(const VectorExpr<E, size>& e) 
+  #if(use_heap_memory)
+  :inData(new valueType[size]
+  #endif
+  {
       std::cout << "Vector construct from VectorExpr" << std::endl;
       *this = e;
   }
 
 public:
   template<typename TT>
-  Vector& operator=(const Vector<TT, size>& v) {
+  Vector& operator=(const Vector<TT, size>& v) 
+  #if(use_heap_memory)
+  :inData(new valueType[size]
+  #endif
+  {
       v.assignTo(*this, AssignFun<valueType, TT>());
 
       return *this;
   }
 
   template<typename E>
-  Vector& operator=(const VectorExpr<E, size>& ve) {
+  Vector& operator=(const VectorExpr<E, size>& ve) 
+  #if(use_heap_memory)
+  :inData(new valueType[size]
+  #endif
+  {
 
       ve.assignTo(*this, AssignFun<valueType, typename E::valueType>());
 
@@ -142,7 +163,12 @@ private:
   }
 
 private:
-  valueType inData[size];
+  #if(use_heap_memory)
+      valueType* inData;
+  #else
+      valueType inData[size];
+  #endif
+
   size_t initIndex = 0;
 };
 
