@@ -6,3 +6,4 @@ macro(create_test target)
 endmacro(create_test)
 
 add_subdirectory(Arithmetic)
+add_subdirectory(Image)

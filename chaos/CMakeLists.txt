@@ -1,1 +1,3 @@
 add_subdirectory(Arithmetic)
+add_subdirectory(Geometry)
+add_subdirectory(Image)
